@@ -179,25 +179,27 @@ h6 {
 /*--------------------------------------------------------------
 # Intro Section
 --------------------------------------------------------------*/
+
 #intro {
   width: 100%;
   height: 90vh;
   position: relative;
-  background: url("../img/intro-carousel/1.gif") no-repeat;
+  background: url("../img/intro-carousel/1.gif") no-repeat center center;
   background-size: cover;
 }
 
 #intro .intro-content {
   position: absolute;
-  bottom: 0;
-  top: 0;
-  right: 0;
+  top: 50%;
   left: 14%;
+  transform: translateY(-50%);
   z-index: 10;
   display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: left;
+  width: 70%;
+  /* Set a width to prevent text from stretching too wide */
 }
 
 #intro .intro-content h2 {
@@ -219,75 +221,41 @@ h6 {
 }
 
 @media (max-width: 767px) {
-  #intro .intro-content h2 {
-    font-size: 22px;
-    /* background: #ffffffa3; */
-    padding: 0;
+  #intro {
+    height: 50vh;
+    /* Adjust height for mobile screens */
+    background-size: contain;
+    /* Keep the image in proportion */
   }
-}
 
-#intro .intro-content .btn-get-started,
-#intro .intro-content .btn-projects {
-  font-family: "Raleway", sans-serif;
-  font-size: 15px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 10px 32px;
-  border-radius: 2px;
-  transition: 0.5s;
-  margin: 0;
-  color: #fff;
-}
+  #intro .intro-content {
+    left: 5%;
+    /* Adjust the position for smaller screens */
+    right: 5%;
+    text-align: center;
+    width: 90%;
+    /* Ensure content doesn't overflow */
+    padding: 10px;
+    /* Add padding to avoid text collision */
+  }
 
-#intro .intro-content .btn-get-started {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-}
+  #intro .intro-content h2 {
+    font-size: 18px;
+    /* Adjust font size for mobile */
+    margin-bottom: 15px;
+    /* Reduce bottom margin */
+  }
 
-#intro .intro-content .btn-get-started:hover {
-  background: none;
-  color: #fff;
-  background: white;
-  border: 2px solid white;
-}
+  #intro .intro-content h2 span {
+    font-size: 30px;
+    /* Reduce size of the highlighted text */
+  }
 
-#intro .intro-content .btn-projects {
-  background: white;
-  border: 2px solid white;
-}
-
-#intro .intro-content .btn-projects:hover {
-  background: none;
-  color: white;
-}
-
-#intro #intro-carousel {
-  z-index: 8;
-}
-
-#intro #intro-carousel::before {
-  content: '';
-  background-color: rgba(255, 255, 255, 0.7);
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 7;
-}
-
-#intro #intro-carousel .item {
-  width: 100%;
-  height: 60vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  -webkit-transition-property: opacity;
-  transition-property: opacity;
+  #intro .intro-content .btn-get-started,
+  #intro .intro-content .btn-projects {
+    padding: 8px 24px;
+    /* Adjust button size for mobile */
+  }
 }
 
 /*--------------------------------------------------------------
@@ -562,6 +530,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 0;
   text-align: center;
 }
+
 #logo img {
   max-width: 150px;
   /* Adjust the logo size as needed */
@@ -766,6 +735,7 @@ Events*/
     text-align: center;
   }
 }
+
 /* Clients Section --------------------------------*/
 #clients {
   padding: 60px 0;
@@ -806,6 +776,7 @@ Events*/
 #clients .owl-dot.active {
   background-color: white;
 }
+
 /* Our Portfolio Section
 --------------------------------*/
 #portfolio {
@@ -1175,6 +1146,7 @@ p.help-block li {
   border: 3px solid white;
   color: #fff;
 }
+
 /* Hover effect on team member cards */
 .member:hover {
   transform: translateY(-10px);
@@ -1202,6 +1174,7 @@ p.help-block li {
 #team .social a:hover {
   color: #007bff;
 }
+
 /* Contact Section
 --------------------------------*/
 #contact {
