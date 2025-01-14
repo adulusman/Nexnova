@@ -107,12 +107,14 @@ License: https://nexnovatechnologies.com/license
 <header id="header">
   <div class="header-container">
     <div id="logo">
-      <a href="#body">
+      <a href="#body" aria-label="Nexnova Technologies">
         <img src="img/logo_1.png" alt="Nexnova Technologies Logo" title="Nexnova Technologies">
       </a>
     </div>
 
-    <button id="mobile-nav-toggle" aria-label="Toggle Navigation">
+    <!-- Mobile Navigation Toggle -->
+    <button id="mobile-nav-toggle" aria-label="Toggle Navigation" aria-expanded="false"
+      aria-controls="nav-menu-container">
       <div class="hamburger">
         <span></span>
         <span></span>
@@ -120,11 +122,12 @@ License: https://nexnovatechnologies.com/license
       </div>
     </button>
 
+    <!-- Navigation Menu -->
     <nav id="nav-menu-container">
       <ul class="nav-menu">
         <li class="menu-active"><a href="#body"><span>Home</span></a></li>
         <li><a href="#services"><span>We Do</span></a></li>
-        <li><a href="#about"><span>Who We</span></a></li>
+        <li><a href="#about"><span>Who We Are</span></a></li>
         <li><a href="#portfolio"><span>Gallery</span></a></li>
         <li><a href="#team"><span>Team</span></a></li>
         <li><a href="#contact"><span>Contact</span></a></li>
@@ -132,6 +135,7 @@ License: https://nexnovatechnologies.com/license
     </nav>
   </div>
 </header>
+
   <!-- #header -->
 
   <!--==========================

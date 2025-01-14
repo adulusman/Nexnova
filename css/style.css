@@ -134,7 +134,7 @@ h6 {
 # Header
 --------------------------------------------------------------*/
 
-
+/* Header Styles */
 #header {
   background: rgba(11, 42, 85, 0.95);
   backdrop-filter: blur(10px);
@@ -145,7 +145,6 @@ h6 {
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
   overflow: hidden;
-  /* Required for the animation */
 }
 
 #header::before {
@@ -156,9 +155,6 @@ h6 {
   width: 200%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  /* animation: shine-header 8s infinite linear; */
-  /* animation: wave-header 8s infinite ease-in-out; */
-  /* animation: diagonal-shine 6s infinite linear; */
   animation: shine 8s infinite linear;
 }
 
@@ -172,13 +168,13 @@ h6 {
   }
 }
 
-
 #header.header-scrolled {
   padding: 10px 0;
   background: rgba(11, 42, 85, 0.98);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Header Container */
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -188,16 +184,13 @@ h6 {
   padding: 0 20px;
 }
 
-#logo {
-  position: relative;
-  overflow: hidden;
-}
-
+/* Logo */
 #logo img {
   height: 45px;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: height 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+/* Navigation Menu */
 .nav-menu {
   display: flex;
   gap: 30px;
@@ -212,17 +205,8 @@ h6 {
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   font-size: 16px;
-  padding: 8px 0;
   position: relative;
   transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.nav-menu li a span {
-  position: relative;
-  display: inline-block;
-  transform-origin: 100% 50%;
-  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .nav-menu li a::after {
@@ -243,20 +227,19 @@ h6 {
   transform-origin: left;
 }
 
-.nav-menu li a:hover span {
-  transform: translateY(-2px);
+.nav-menu li a:hover {
   color: #4DB8FF;
 }
 
 .menu-active a {
-  color: #4DB8FF !important;
+  color: #4DB8FF;
 }
 
 .menu-active a::after {
-  transform: scaleX(1) !important;
+  transform: scaleX(1);
 }
 
-/* Hamburger Menu Styles */
+/* Hamburger Menu */
 .hamburger {
   width: 30px;
   height: 20px;
@@ -271,7 +254,7 @@ h6 {
   width: 100%;
   background: #fff;
   border-radius: 2px;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.3s ease;
 }
 
 .hamburger span:nth-child(1) {
@@ -300,30 +283,39 @@ h6 {
   top: 9px;
 }
 
-/* Mobile Styles */
-#mobile-nav-toggle {
+/* Mobile Navigation */
+#nav-menu-container {
   display: none;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 9999;
+  text-align: center;
 }
 
+.mobile-nav-active #nav-menu-container {
+  display: block;
+}
+
+#nav-menu-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#nav-menu-container ul li {
+  padding: 10px 0;
+}
+
+/* Responsive Design */
 @media (max-width: 991px) {
   #mobile-nav-toggle {
     display: block;
-  }
-
-  #header {
-    padding: 15px 0;
-  }
-
-  .header-container {
-    padding: 0 15px;
-  }
-
-  #logo img {
-    height: 35px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
   }
 
   .nav-menu {
@@ -334,15 +326,13 @@ h6 {
     width: 100%;
     height: calc(100vh - 65px);
     background: rgba(11, 42, 85, 0.98);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     padding: 20px;
     flex-direction: column;
     align-items: center;
     gap: 25px;
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.3s ease;
   }
 
   .mobile-nav-active .nav-menu {
@@ -352,9 +342,7 @@ h6 {
   }
 
   .nav-menu li {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: opacity 0.3s, transform 0.3s;
   }
 
   .mobile-nav-active .nav-menu li {
@@ -362,39 +350,13 @@ h6 {
     transform: translateY(0);
   }
 
-  .nav-menu li:nth-child(1) {
-    transition-delay: 0.1s;
-  }
-
-  .nav-menu li:nth-child(2) {
-    transition-delay: 0.2s;
-  }
-
-  .nav-menu li:nth-child(3) {
-    transition-delay: 0.3s;
-  }
-
-  .nav-menu li:nth-child(4) {
-    transition-delay: 0.4s;
-  }
-
-  .nav-menu li:nth-child(5) {
-    transition-delay: 0.5s;
-  }
-
-  .nav-menu li:nth-child(6) {
-    transition-delay: 0.6s;
-  }
-
   .nav-menu li a {
-    display: block;
-    padding: 10px 0;
     font-size: 18px;
     text-align: center;
+    padding: 10px 0;
     width: 100%;
   }
 }
-
 /*--------------------------------------------------------------
 # Intro Section
 --------------------------------------------------------------*/

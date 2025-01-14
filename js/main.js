@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-
+    // Back-to-top functionality
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
             $('.back-to-top').fadeIn('slow');
@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
             $('.back-to-top').fadeOut('slow');
         }
     });
+
     $('.back-to-top').click(function () {
         $('html, body').animate({
             scrollTop: 0
@@ -14,11 +15,13 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
+    // Sticky header
     $("#header").sticky({
         topSpacing: 0,
         zIndex: '50'
     });
 
+    // Intro carousel
     $("#intro-carousel").owlCarousel({
         autoplay: true,
         dots: false,
@@ -29,34 +32,7 @@ jQuery(document).ready(function ($) {
 
     new WOW().init();
 
-    document.addEventListener('DOMContentLoaded', function () {
-        // Header scroll effect
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 100) {
-                document.querySelector('#header').classList.add('header-scrolled');
-            } else {
-                document.querySelector('#header').classList.remove('header-scrolled');
-            }
-        });
-
-        // Mobile navigation toggle
-        const mobileNavToggle = document.querySelector('#mobile-nav-toggle');
-        mobileNavToggle.addEventListener('click', function () {
-            document.body.classList.toggle('mobile-nav-active');
-            this.querySelector('i').classList.toggle('fa-bars');
-            this.querySelector('i').classList.toggle('fa-times');
-        });
-
-        // Close mobile nav when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('#nav-menu-container') && !e.target.closest('#mobile-nav-toggle')) {
-                document.body.classList.remove('mobile-nav-active');
-                mobileNavToggle.querySelector('i').classList.remove('fa-times');
-                mobileNavToggle.querySelector('i').classList.add('fa-bars');
-            }
-        });
-    });
-
+    // Portfolio popup
     $('.portfolio-popup').magnificPopup({
         type: 'image',
         removalDelay: 300,
@@ -74,46 +50,35 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    // Testimonials carousel
     $(".testimonials-carousel").owlCarousel({
         autoplay: true,
         dots: true,
         loop: true,
         responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 2
-            },
-            900: {
-                items: 3
-            }
+            0: { items: 1 },
+            768: { items: 2 },
+            900: { items: 3 }
         }
     });
 
+    // Clients carousel
     $(".clients-carousel").owlCarousel({
         autoplay: true,
         dots: true,
         loop: true,
         responsive: {
-            0: {
-                items: 2
-            },
-            768: {
-                items: 4
-            },
-            900: {
-                items: 6
-            }
+            0: { items: 2 },
+            768: { items: 4 },
+            900: { items: 6 }
         }
     });
-
-
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('#header');
     const mobileNavToggle = document.querySelector('#mobile-nav-toggle');
+    const navMenuContainer = document.querySelector('#nav-menu-container');
     const navLinks = document.querySelectorAll('.nav-menu li a');
     let lastScroll = 0;
 
@@ -138,21 +103,34 @@ document.addEventListener('DOMContentLoaded', function () {
         lastScroll = currentScroll;
     });
 
+    
+
+
     // Mobile navigation toggle
     mobileNavToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
+        e.preventDefault();
         document.body.classList.toggle('mobile-nav-active');
+
+        // Toggle icon (hamburger <-> close)
+        const toggleIcon = mobileNavToggle.querySelector('i');
+        toggleIcon.classList.toggle('fa-bars');
+        toggleIcon.classList.toggle('fa-times');
+        
     });
 
     // Close mobile nav when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('#nav-menu-container') &&
-            !e.target.closest('#mobile-nav-toggle')) {
+        if (!e.target.closest('#nav-menu-container') && !e.target.closest('#mobile-nav-toggle')) {
             document.body.classList.remove('mobile-nav-active');
+
+            // Reset icon to hamburger
+            const toggleIcon = mobileNavToggle.querySelector('i');
+            toggleIcon.classList.add('fa-bars');
+            toggleIcon.classList.remove('fa-times');
         }
     });
 
-    // Handle navigation clicks
+    // Smooth scroll and active menu item handling
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
