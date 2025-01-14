@@ -122,20 +122,56 @@ h6 {
   position: relative;
   z-index: 2;
 }
+
+/* Hide #topbar on mobile screens */
+@media (max-width: 768px) {
+  #topbar {
+    display: none;
+  }
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
+
+
 #header {
   background: rgba(11, 42, 85, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 15px 0;
-  /* position: fixed; */
   width: 100%;
-  /* top: 0; */
   z-index: 1000;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+  /* Required for the animation */
 }
+
+#header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  /* animation: shine-header 8s infinite linear; */
+  /* animation: wave-header 8s infinite ease-in-out; */
+  /* animation: diagonal-shine 6s infinite linear; */
+  animation: shine 8s infinite linear;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 
 #header.header-scrolled {
   padding: 10px 0;
@@ -358,6 +394,7 @@ h6 {
     width: 100%;
   }
 }
+
 /*--------------------------------------------------------------
 # Intro Section
 --------------------------------------------------------------*/
