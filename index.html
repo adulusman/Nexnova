@@ -79,18 +79,25 @@ License: https://nexnovatechnologies.com/license
   <!--==========================
     Top Bar
   ============================-->
-  <section id="topbar" class="d-none d-lg-block">
-    <div class="container clearfix">
-      <div class="contact-info float-left">
-        <i class="fa fa-envelope-o"></i> <a href="mailto:contact@example.com">nexnovatechnologies@gmail.com</a>
-        <i class="fa fa-phone"></i>+91 7306 12 15 17
-      </div>
-      <div class="social-links float-right">
-        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-        <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
-        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+  <section id="topbar">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="contact-info">
+          <a href="mailto:nexnovatechnologies@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            nexnovatechnologies@gmail.com
+          </a>
+          <a href="tel:+917306121517">
+            <i class="fa fa-phone"></i>
+            +91 7306 12 15 17
+          </a>
+        </div>
+        <div class="social-links">
+          <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+          <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+          <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+        </div>
       </div>
     </div>
   </section>
@@ -98,13 +105,16 @@ License: https://nexnovatechnologies.com/license
   Header
 ============================-->
   <header id="header">
-    <div class="container">
-
-      <div id="logo" class="pull-left">
-        <!-- Replace the text with an image logo -->
-        <a href="#body" class="scrollto"><img src="img/logo_1.png" alt="Nexnova Technologies Logo"
-            title="Nexnova Technologies" /></a>
+    <div class="header-container">
+      <div id="logo">
+        <a href="#body">
+          <img src="img/logo_1.png" alt="Nexnova Technologies Logo" title="Nexnova Technologies">
+        </a>
       </div>
+
+      <button id="mobile-nav-toggle">
+        <i class="fa fa-bars"></i>
+      </button>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
@@ -112,14 +122,13 @@ License: https://nexnovatechnologies.com/license
           <li><a href="#services">We Do</a></li>
           <li><a href="#about">Who We</a></li>
           <li><a href="#portfolio">Gallery</a></li>
-          <!-- <li><a href="#event">Events</a></li> -->
           <li><a href="#team">Team</a></li>
-          <!-- <li><a href="#price">Price</a></li> -->
           <li><a href="#contact">Contact</a></li>
         </ul>
-      </nav><!-- #nav-menu-container -->
+      </nav>
     </div>
-  </header><!-- #header -->
+  </header>
+  <!-- #header -->
 
   <!--==========================
     Intro Section
@@ -149,7 +158,7 @@ License: https://nexnovatechnologies.com/license
         <p>Empowering digital transformation through innovative solutions and cutting-edge technologies</p>
       </div>
 
-      <div class="services-grid">
+      <div class="services-grid" id="services">
         <div class="service-card">
           <div class="service-icon">
             <i class="fa fa-graduation-cap"></i>
@@ -238,7 +247,7 @@ License: https://nexnovatechnologies.com/license
     </section><!-- #services -->
 
     <!--About Section-->
-    <section class="about-section">
+    <section class="about-section" id="about">
       <div class="container">
         <div class="tech-grid">
           <div class="about-content">
@@ -355,6 +364,7 @@ License: https://nexnovatechnologies.com/license
         </div>
       </div>
     </section>
+
     <!-- #clients -->
 
 

@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
         items: 1
     });
  
-    new WOW().init();
+     new WOW().init();
  
     $('.nav-menu').superfish({
         animation: {
