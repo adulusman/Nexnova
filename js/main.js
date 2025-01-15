@@ -1,26 +1,28 @@
-jQuery(document).ready(function ($) {
+document.addEventListener('DOMContentLoaded', function () {
     // Back-to-top functionality
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            $('.back-to-top').fadeIn('slow');
+    const backToTop = document.querySelector('.back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            backToTop.style.display = 'block';
+            backToTop.style.opacity = '1';
         } else {
-            $('.back-to-top').fadeOut('slow');
+            backToTop.style.opacity = '0';
+            setTimeout(() => {
+                backToTop.style.display = 'none';
+            }, 300);
         }
     });
 
-    $('.back-to-top').click(function () {
-        $('html, body').animate({
-            scrollTop: 0
-        }, 1500, 'easeInOutExpo');
-        return false;
+    backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
 
-    // Sticky header
-    $("#header").sticky({
-        topSpacing: 0,
-        zIndex: '50'
-    });
-
+    // Initialize carousels
     // Intro carousel
     $("#intro-carousel").owlCarousel({
         autoplay: true,
@@ -30,6 +32,7 @@ jQuery(document).ready(function ($) {
         items: 1
     });
 
+    // Animation initialization
     new WOW().init();
 
     // Portfolio popup
@@ -75,110 +78,58 @@ jQuery(document).ready(function ($) {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const header = document.querySelector('#header');
-    const mobileNavToggle = document.querySelector('#mobile-nav-toggle');
-    const navMenuContainer = document.querySelector('#nav-menu-container');
-    const navLinks = document.querySelectorAll('.nav-menu li a');
-    let lastScroll = 0;
+const mobileToggle = document.querySelector('.mobile-nav-toggle');
+const navMenu = document.querySelector('.nav-menu');
+const header = document.querySelector('#header');
 
-    // Scroll handler for header
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+// Mobile menu toggle
+mobileToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    mobileToggle.classList.toggle('active');
+});
 
-        // Add/remove header-scrolled class
-        if (currentScroll > 100) {
-            header.classList.add('header-scrolled');
-        } else {
-            header.classList.remove('header-scrolled');
-        }
+// Scroll effect
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        header.style.background = 'rgba(14, 18, 36, 0.98)';
+        // header.style.padding = '10px 0';
+    } else {
+        header.style.background = 'transparent';
+        // header.style.padding = '15px 0';
+    }
+});
 
-        // Hide/show header on scroll
-        if (currentScroll > lastScroll && currentScroll > 200) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
-
-        lastScroll = currentScroll;
+// Close menu when clicking a link
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileToggle.classList.remove('active');
     });
+});
 
-    
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+        navMenu.classList.remove('active');
+        mobileToggle.classList.remove('active');
+    }
+});
 
-
-    // Mobile navigation toggle
-    mobileNavToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.body.classList.toggle('mobile-nav-active');
-
-        // Toggle icon (hamburger <-> close)
-        const toggleIcon = mobileNavToggle.querySelector('i');
-        toggleIcon.classList.toggle('fa-bars');
-        toggleIcon.classList.toggle('fa-times');
-        
-    });
-
-    // Close mobile nav when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('#nav-menu-container') && !e.target.closest('#mobile-nav-toggle')) {
-            document.body.classList.remove('mobile-nav-active');
-
-            // Reset icon to hamburger
-            const toggleIcon = mobileNavToggle.querySelector('i');
-            toggleIcon.classList.add('fa-bars');
-            toggleIcon.classList.remove('fa-times');
+// Active link highlighting
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
         }
     });
 
-    // Smooth scroll and active menu item handling
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            // Remove active class from all links
-            navLinks.forEach(l => l.parentElement.classList.remove('menu-active'));
-
-            // Add active class to clicked link
-            link.parentElement.classList.add('menu-active');
-
-            // Close mobile menu if open
-            document.body.classList.remove('mobile-nav-active');
-
-            // Smooth scroll to section
-            const targetId = link.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+            link.classList.add('active');
+        }
     });
-
-    // Add intersection observer for active menu items
-    const sections = document.querySelectorAll('section');
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.parentElement.classList.add('menu-active');
-                    } else {
-                        link.parentElement.classList.remove('menu-active');
-                    }
-                });
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => observer.observe(section));
 });
