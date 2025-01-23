@@ -1469,6 +1469,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     font-size: 2rem;
   }
 }
+
 /* Call To Action Section
 --------------------------------*/
 #call-to-action {
@@ -1515,7 +1516,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #call-to-action .cta-btn:hover {
-  background: white;
+  background: #9C27B0;
   border: 3px solid white;
   color: #fff;
 }
@@ -1727,7 +1728,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 @media (min-width: 768px) {
-  #contact .contact-phone {}
+  #contact .contact-phone {
+    color: #081e5b;
+  }
 }
 
 #contact #google-map {
@@ -1742,7 +1745,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #contact .form #sendmessage {
-  color: white;
+  color: #9C27B0;
   border: 1px solid white;
   display: none;
   text-align: center;
@@ -1785,7 +1788,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #contact .form button[type="submit"] {
-  background: white;
+  background: #9C27B0;
   border: 0;
   border-radius: 3px;
   padding: 10px 30px;
