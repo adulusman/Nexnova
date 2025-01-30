@@ -133,3 +133,50 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// Accordion functionality
+document.querySelectorAll('.accordion-header').forEach(button => {
+    button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        button.querySelector('i').classList.toggle('fa-chevron-up');
+        content.classList.toggle('active');
+    });
+});
+
+// Animated number counting
+const stats = document.querySelectorAll('.stat-number');
+
+function animateNumber(element, target) {
+    let current = 0;
+    const increment = target / 100;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            clearInterval(timer);
+            current = target;
+        }
+        if (element.tagName === 'SPAN') {
+            element.textContent = Math.floor(current).toLocaleString();
+        } else {
+            element.textContent = Math.floor(current);
+        }
+    }, 20);
+}
+
+// Intersection Observer for stats animation
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = entry.target.dataset.target;
+            if (target) {
+                animateNumber(entry.target, parseInt(target));
+            }
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.9 });
+
+stats.forEach(stat => {
+    const targetElement = stat.tagName === 'SPAN' ? stat : stat;
+    observer.observe(targetElement);
+});
