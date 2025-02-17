@@ -17,7 +17,7 @@
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 540px;
             margin: 0 auto;
             background: white;
             padding: 20px;
@@ -28,8 +28,8 @@
 
         .canvas-container {
             width: 100%;
-            padding-bottom: 100%;
-            /* Creates a 1:1 aspect ratio */
+            padding-bottom: 138.15%;
+            /* (746/540 * 100) to maintain aspect ratio */
             position: relative;
             margin: 20px 0;
         }
@@ -96,40 +96,12 @@
             gap: 10px;
         }
 
-        .pricing-plan h3 {
-            color: #007bff;
-            margin: 0;
-        }
-
-        .pricing-plan p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-
-        .price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #007bff;
-        }
-
         @media (max-width: 768px) {
             body {
                 padding: 10px;
             }
 
             .container {
-                padding: 15px;
-            }
-
-            .canvas-container {
-                margin: 10px 0;
-            }
-
-            .pricing-table {
-                padding: 10px;
-            }
-
-            .pricing-plan {
                 padding: 15px;
             }
         }
@@ -181,12 +153,15 @@
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
 
-        // Set canvas size with fixed aspect ratio
+        // Set canvas size with original aspect ratio
         function setCanvasSize() {
             const containerWidth = canvas.parentElement.clientWidth;
             canvas.width = containerWidth;
-            canvas.height = containerWidth; // Maintain 1:1 aspect ratio
-            return containerWidth;
+            canvas.height = (containerWidth * 746) / 540; // Maintain original aspect ratio
+            return {
+                width: containerWidth,
+                height: canvas.height
+            };
         }
 
         // Initial canvas size
@@ -206,10 +181,11 @@
         };
 
         function generateImage() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const dimensions = setCanvasSize();
+            ctx.clearRect(0, 0, dimensions.width, dimensions.height);
 
             // Draw template maintaining aspect ratio
-            ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(template, 0, 0, dimensions.width, dimensions.height);
 
             const file = document.getElementById("imageUpload").files[0];
             const name = document.getElementById("nameInput").value;
@@ -221,10 +197,10 @@
                     uploadedImage.src = event.target.result;
 
                     uploadedImage.onload = function () {
-                        // Ensure circle remains perfectly round
-                        const circleX = canvas.width * 0.35;
-                        const circleY = canvas.height * 0.37;
-                        const radius = Math.min(canvas.width, canvas.height) * 0.16;
+                        // Position circle proportionally based on original template dimensions
+                        const circleX = dimensions.width * 0.297;
+                        const circleY = dimensions.height * 0.369;
+                        const radius = dimensions.width * 0.23;
 
                         ctx.save();
                         ctx.beginPath();
@@ -232,7 +208,7 @@
                         ctx.closePath();
                         ctx.clip();
 
-                        // Calculate dimensions to maintain aspect ratio
+                        // Draw uploaded image maintaining aspect ratio within circle
                         const size = radius * 2;
                         ctx.drawImage(uploadedImage, circleX - radius, circleY - radius, size, size);
                         ctx.restore();
@@ -242,12 +218,12 @@
             }
 
             if (name) {
-                // Scale font size based on canvas dimensions
-                const fontSize = Math.min(canvas.width, canvas.height) * 0.025;
+                // Scale font size based on original template dimensions
+                const fontSize = 12;
                 ctx.font = `bold ${fontSize}px Georgia`;
                 ctx.fillStyle = "black";
                 ctx.textAlign = "center";
-                ctx.fillText(name.toUpperCase(), canvas.width * 0.335, canvas.height * 0.635);
+                ctx.fillText(name.toUpperCase(), dimensions.width * 0.28, dimensions.height * 0.625);
             }
         }
 
