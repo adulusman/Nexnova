@@ -620,6 +620,142 @@ h6 {
 
 
 /*--------------------------------------------------------------
+# Template editor
+--------------------------------------------------------------*/
+
+.pricing-section {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(135deg, #0a1930 0%, #1a2942 100%);
+  overflow: hidden;
+}
+
+.tech-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(32, 40, 119, 0.08) 0%, rgba(32, 40, 119, 0.08) 50%, rgba(32, 40, 119, 0.12) 100%);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.pricing-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-card.featured {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(100, 255, 218, 0.1) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  transform: scale(1.05);
+}
+
+.card-header {
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.price {
+  margin: 20px 0;
+  color: #fff;
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.period {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.card-content {
+  padding: 30px;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.features li {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.features li i {
+  color: #64ffda;
+  margin-right: 10px;
+}
+
+.tech-button {
+  display: block;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #6366f1 0%, #64ffda 100%);
+  color: white;
+  text-align: center;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+
+.tech-button:hover {
+  transform: scale(1.05);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
+  }
+
+  .pricing-card.featured {
+    transform: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
 /* Nav Menu Essentials */

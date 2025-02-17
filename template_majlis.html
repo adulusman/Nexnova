@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexnova Image Template Editor</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #23358d;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            max-width: 100%;
+            height: auto;
+            background-color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .pricing {
+
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .pricing-table {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pricing-plan {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .pricing-plan h3 {
+            color: #007bff;
+        }
+
+        .pricing-plan p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Upload Your Image & Enter Your Name</h2>
+        <input type="file" id="imageUpload" accept="image/*"><br>
+        <input type="text" id="nameInput" placeholder="Enter your name"><br>
+        <button onclick="generateImage()">Generate Image</button>
+        <button onclick="downloadImage()">Download</button>
+        <canvas id="canvas" width="800" height="800"></canvas>
+    </div>
+
+    <div class="pricing">
+        <h2>Pricing for Templates</h2>
+        <div class="pricing-table">
+            <div class="pricing-plan">
+                <h3>Basic</h3>
+                <p>₹499</p>
+                <p>Single Template</p>
+                <p>HD Quality</p>
+                <button onclick="redirectToWhatsApp('Basic')">Choose Plan</button>
+            </div>
+            <div class="pricing-plan">
+                <h3>Premium</h3>
+                <p>₹999</p>
+                <p>3 Templates</p>
+                <p>Custom Design</p>
+                <button onclick="redirectToWhatsApp('Premium')">Choose Plan</button>
+            </div>
+            <div class="pricing-plan">
+                <h3>Business</h3>
+                <p>₹1999</p>
+                <p>Unlimited Templates</p>
+                <p>Branding Support</p>
+                <button onclick="redirectToWhatsApp('Business')">Choose Plan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const template = new Image();
+        template.src = "img/templates_image/My_Majlis.svg";
+
+        template.onload = function () {
+            ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+        };
+
+        function generateImage() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+
+            const file = document.getElementById("imageUpload").files[0];
+            let name = document.getElementById("nameInput").value;
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const uploadedImage = new Image();
+                    uploadedImage.src = event.target.result;
+
+                    uploadedImage.onload = function () {
+                        const circleX = canvas.width * 0.35;
+                        const circleY = canvas.height * 0.37;
+                        const radius = canvas.width * 0.16;
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(circleX, circleY, radius, 0, Math.PI * 2);
+                        ctx.closePath();
+                        ctx.clip();
+                        ctx.drawImage(uploadedImage, circleX - radius, circleY - radius, radius * 2, radius * 2);
+                        ctx.restore();
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+
+            if (name) {
+                name = name.toUpperCase();
+                ctx.font = "bold 2.5vw Georgia";
+                ctx.fillStyle = "black";
+                ctx.textAlign = "center";
+                ctx.fillText(name, canvas.width * 0.335, canvas.height * 0.635);
+            }
+        }
+
+        function downloadImage() {
+            const link = document.createElement("a");
+            link.download = "customized_template.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
+
+        function redirectToWhatsApp(plan) {
+            const phoneNumber = "917306121517";
+            const message = `Can I know more about the "${plan}" template plan?`;
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, "_blank");
+        }
+    </script>
+</body>
+
+</html>
