@@ -26,13 +26,22 @@
             box-sizing: border-box;
         }
 
-        canvas {
-            border: 1px solid #ccc;
+        .canvas-container {
             width: 100%;
-            height: auto;
-            max-width: 800px;
-            background-color: white;
+            padding-bottom: 100%;
+            /* Creates a 1:1 aspect ratio */
+            position: relative;
             margin: 20px 0;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ccc;
+            background-color: white;
         }
 
         .controls {
@@ -112,7 +121,7 @@
                 padding: 15px;
             }
 
-            canvas {
+            .canvas-container {
                 margin: 10px 0;
             }
 
@@ -136,7 +145,9 @@
             <button onclick="generateImage()">Generate Image</button>
             <button onclick="downloadImage()">Download</button>
         </div>
-        <canvas id="canvas"></canvas>
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
 
     <div class="pricing">
@@ -170,13 +181,12 @@
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
 
-        // Set canvas size based on device
+        // Set canvas size with fixed aspect ratio
         function setCanvasSize() {
             const containerWidth = canvas.parentElement.clientWidth;
-            const size = Math.min(containerWidth, 800);
-            canvas.width = size;
-            canvas.height = size;
-            return size;
+            canvas.width = containerWidth;
+            canvas.height = containerWidth; // Maintain 1:1 aspect ratio
+            return containerWidth;
         }
 
         // Initial canvas size
@@ -197,6 +207,8 @@
 
         function generateImage() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw template maintaining aspect ratio
             ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
             const file = document.getElementById("imageUpload").files[0];
@@ -209,16 +221,20 @@
                     uploadedImage.src = event.target.result;
 
                     uploadedImage.onload = function () {
+                        // Ensure circle remains perfectly round
                         const circleX = canvas.width * 0.35;
                         const circleY = canvas.height * 0.37;
-                        const radius = canvas.width * 0.16;
+                        const radius = Math.min(canvas.width, canvas.height) * 0.16;
 
                         ctx.save();
                         ctx.beginPath();
                         ctx.arc(circleX, circleY, radius, 0, Math.PI * 2);
                         ctx.closePath();
                         ctx.clip();
-                        ctx.drawImage(uploadedImage, circleX - radius, circleY - radius, radius * 2, radius * 2);
+
+                        // Calculate dimensions to maintain aspect ratio
+                        const size = radius * 2;
+                        ctx.drawImage(uploadedImage, circleX - radius, circleY - radius, size, size);
                         ctx.restore();
                     };
                 };
@@ -226,7 +242,8 @@
             }
 
             if (name) {
-                const fontSize = Math.floor(canvas.width * 0.025);
+                // Scale font size based on canvas dimensions
+                const fontSize = Math.min(canvas.width, canvas.height) * 0.025;
                 ctx.font = `bold ${fontSize}px Georgia`;
                 ctx.fillStyle = "black";
                 ctx.textAlign = "center";
